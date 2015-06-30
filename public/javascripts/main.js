@@ -1,25 +1,8 @@
 $(document).ready(function () {
-    $("input").prop("disabled", true);
 
-    $(".cb-enable").click(function () {
-        var parent = $(this).parents('.switch');
-        $('.cb-disable', parent).removeClass('selected');
-        $(this).addClass('selected');
-        $('.checkbox', parent).attr('checked', true);
-    });
-    $(".cb-disable").click(function () {
-        var parent = $(this).parents('.switch');
-        $('.cb-enable', parent).removeClass('selected');
-        $(this).addClass('selected');
-        $('.checkbox', parent).attr('checked', false);
-    });
+    $("#findfriends").click(getFriendsList);
 });
 
-function showInterests() {
-
-    $('input').prop("disabled", false);
-
-}
 
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
@@ -29,7 +12,7 @@ function testAPI() {
 //            console.log('Successful login for: ' + response.name);
         document.getElementById('status').innerHTML =
             'Thanks for logging in, ' + response.name + '!';
-        callFCallback(response, 'facebook');
+        //callFCallback(response, 'facebook');
     });
 }
 
@@ -47,4 +30,16 @@ function checkLoginState() {
     FB.getLoginStatus(function (response) {
         statusChangeCallback(response);
     });
+}
+
+function getFriendsList() {
+    FB.api(
+        "/me/friends",
+        function (response) {
+            if (response && !response.error) {
+                /* handle the result */
+                console.log(response);
+            }
+        }
+    );
 }
